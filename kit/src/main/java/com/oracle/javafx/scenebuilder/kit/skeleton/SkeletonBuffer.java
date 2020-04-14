@@ -189,9 +189,9 @@ public class SkeletonBuffer {
             }
 
             if (textType == TEXT_TYPE.WITH_COMMENTS) {
-                variables.append(key).append(":").append(type.getSimpleName()).append(" // Value injected by FXMLLoader\n\n"); //NOI18N
+                variables.append(key).append(":").append(type.getSimpleName()).append(" = _").append(" // Value injected by FXMLLoader\n\n"); //NOI18N
             } else {
-                variables.append(key).append(":").append(type.getSimpleName()).append("\n\n"); //NOI18N
+                variables.append(key).append(":").append(type.getSimpleName()).append(" = _").append("\n\n"); //NOI18N
             }
 
             asserts.append(INDENT).append(INDENT).append("assert(").append(key).append(" != null , ") //NOI18N
