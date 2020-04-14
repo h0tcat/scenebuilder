@@ -18,7 +18,7 @@ subprojects {
     apply plugin: 'org.openjfx.javafxplugin'
 
     group = 'com.gluonhq.scenebuilder'
-    version = project.findProperty('VERSION') ?: '11.0.0-SNAPSHOT'
+    version = project.findProperty('VERSION') ?: '11.0.0-SNAPSHOT.h0tcat'
 
     ext.buildDateFormat = version.endsWith('-SNAPSHOT') ? 'yyyy-MM-dd HH:mm:ss' : 'yyyy-MM-dd'
 
