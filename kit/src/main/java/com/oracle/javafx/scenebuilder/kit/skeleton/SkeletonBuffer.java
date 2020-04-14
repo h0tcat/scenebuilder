@@ -145,7 +145,7 @@ public class SkeletonBuffer {
             }
 
             initialize.append(INDENT);
-            initialize.append("def initialize() = {\n"); //NOI18N
+            initialize.append("def initialize() : Unit = {\n"); //NOI18N
             initialize.append(asserts);
             initialize.append("\n"); //NOI18N
             initialize.append(INDENT);
@@ -231,7 +231,7 @@ public class SkeletonBuffer {
         final String methodNamePured = methodName.replace("#", ""); //NOI18N
         handlers.append(methodNamePured);
         String eventName = FindEventNamesUtil.findEventName(eventTypeName);
-        handlers.append("(").append("event:").append(eventName).append(") = {\n\n").append(INDENT).append("}\n\n"); //NOI18N
+        handlers.append("(").append("event:").append(eventName).append(") : Unit = {\n\n").append(INDENT).append("}\n\n"); //NOI18N
         if (textFormat == FORMAT_TYPE.FULL) {
             addImportsForEvents(eventName);
         }
@@ -292,14 +292,14 @@ public class SkeletonBuffer {
 
             if (textType == TEXT_TYPE.WITH_COMMENTS && textFormat == FORMAT_TYPE.FULL) {
                 code.append(INDENT).append("@FXML // ResourceBundle that was given to the FXMLLoader\n") //NOI18N
-                        .append(INDENT).append("var resources:ResourceBundle\n\n") //NOI18N
+                        .append(INDENT).append("var resources:ResourceBundle = _\n\n") //NOI18N
                         .append(INDENT).append("@FXML // URL location of the FXML file that was given to the FXMLLoader\n") //NOI18N
-                        .append(INDENT).append("var location:URL\n\n"); //NOI18N
+                        .append(INDENT).append("var location:URL = _\n\n"); //NOI18N
             } else if (textFormat == FORMAT_TYPE.FULL) {
                 code.append(INDENT).append(FXML_ANNOTATION) //NOI18N
-                        .append(INDENT).append("var resources:ResourceBundle\n\n") //NOI18N
+                        .append(INDENT).append("var resources:ResourceBundle = _\n\n") //NOI18N
                         .append(INDENT).append(FXML_ANNOTATION) //NOI18N
-                        .append(INDENT).append("var location:URL\n\n"); //NOI18N
+                        .append(INDENT).append("var location:URL = _\n\n"); //NOI18N
             }
 
             code.append(variables);
