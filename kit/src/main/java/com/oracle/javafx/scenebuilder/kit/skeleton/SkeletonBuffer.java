@@ -174,7 +174,7 @@ public class SkeletonBuffer {
             }
 
             variables.append("\n"); //NOI18N
-            variables.append(INDENT).append("private ").append(type.getSimpleName()); //NOI18N
+            variables.append(INDENT).append("var "); //NOI18N
             final TypeVariable<? extends Class<?>>[] parameters = type.getTypeParameters();
 
             if (parameters.length > 0) {
@@ -189,9 +189,9 @@ public class SkeletonBuffer {
             }
 
             if (textType == TEXT_TYPE.WITH_COMMENTS) {
-                variables.append(" ").append(key).append("; // Value injected by FXMLLoader\n\n"); //NOI18N
+                variables.append(key).append(":").append(type.getSimpleName()).append(" // Value injected by FXMLLoader\n\n"); //NOI18N
             } else {
-                variables.append(" ").append(key).append(";\n\n"); //NOI18N
+                variables.append(key).append(":").append(type.getSimpleName()).append("\n\n"); //NOI18N
             }
 
             asserts.append(INDENT).append(INDENT).append("assert(").append(key).append(" != null , ") //NOI18N
@@ -231,7 +231,7 @@ public class SkeletonBuffer {
         final String methodNamePured = methodName.replace("#", ""); //NOI18N
         handlers.append(methodNamePured);
         String eventName = FindEventNamesUtil.findEventName(eventTypeName);
-        handlers.append("(").append(eventName).append(" event) {\n\n").append(INDENT).append("}\n\n"); //NOI18N
+        handlers.append("(").append("event:").append(eventName).append(") = {\n\n").append(INDENT).append("}\n\n"); //NOI18N
         if (textFormat == FORMAT_TYPE.FULL) {
             addImportsForEvents(eventName);
         }
