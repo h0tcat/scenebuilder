@@ -111,13 +111,13 @@ public class SkeletonBuffer {
 
     private void constructClassLine() {
             String controller = document.getFxomRoot().getFxController();
-            classLine.append("\npublic "); //NOI18N
+            classLine.append("\n"); //NOI18N
 
             if (controller != null && controller.contains("$")) { //NOI18N
-                classLine.append("static "); //NOI18N
+
             }
 
-            classLine.append("class "); //NOI18N
+            classLine.append("object "); //NOI18N
 
             if (controller != null && !controller.isEmpty()) {
                 String simpleName = controller.replace("$", "."); //NOI18N
@@ -145,7 +145,7 @@ public class SkeletonBuffer {
             }
 
             initialize.append(INDENT);
-            initialize.append("void initialize() {\n"); //NOI18N
+            initialize.append("def initialize() = {\n"); //NOI18N
             initialize.append(asserts);
             initialize.append("\n"); //NOI18N
             initialize.append(INDENT);
@@ -194,10 +194,10 @@ public class SkeletonBuffer {
                 variables.append(" ").append(key).append(";\n\n"); //NOI18N
             }
 
-            asserts.append(INDENT).append(INDENT).append("assert ").append(key).append(" != null : ") //NOI18N
+            asserts.append(INDENT).append(INDENT).append("assert(").append(key).append(" != null , ") //NOI18N
                     .append("\"fx:id=\\\"").append(key).append("\\\" was not injected: check your FXML file ") //NOI18N
                     .append("'").append(documentName) //NOI18N
-                    .append("'.\";\n"); //NOI18N
+                    .append("'.\")\n"); //NOI18N
         }
 
         if (textFormat == FORMAT_TYPE.FULL) {
@@ -227,7 +227,7 @@ public class SkeletonBuffer {
      * @param eventTypeName eventTypeName, e.g. onMouseClicked
      */
     private void generateControllerSkeleton(String methodName, String eventTypeName) {
-        handlers.append(INDENT).append(FXML_ANNOTATION).append(INDENT).append("void "); //NOI18N
+        handlers.append(INDENT).append(FXML_ANNOTATION).append(INDENT).append("def "); //NOI18N
         final String methodNamePured = methodName.replace("#", ""); //NOI18N
         handlers.append(methodNamePured);
         String eventName = FindEventNamesUtil.findEventName(eventTypeName);
@@ -292,14 +292,14 @@ public class SkeletonBuffer {
 
             if (textType == TEXT_TYPE.WITH_COMMENTS && textFormat == FORMAT_TYPE.FULL) {
                 code.append(INDENT).append("@FXML // ResourceBundle that was given to the FXMLLoader\n") //NOI18N
-                        .append(INDENT).append("private ResourceBundle resources;\n\n") //NOI18N
+                        .append(INDENT).append("var resources:ResourceBundle\n\n") //NOI18N
                         .append(INDENT).append("@FXML // URL location of the FXML file that was given to the FXMLLoader\n") //NOI18N
-                        .append(INDENT).append("private URL location;\n\n"); //NOI18N
+                        .append(INDENT).append("var location:URL\n\n"); //NOI18N
             } else if (textFormat == FORMAT_TYPE.FULL) {
                 code.append(INDENT).append(FXML_ANNOTATION) //NOI18N
-                        .append(INDENT).append("private ResourceBundle resources;\n\n") //NOI18N
+                        .append(INDENT).append("var resources:ResourceBundle\n\n") //NOI18N
                         .append(INDENT).append(FXML_ANNOTATION) //NOI18N
-                        .append(INDENT).append("private URL location;\n\n"); //NOI18N
+                        .append(INDENT).append("var location:URL\n\n"); //NOI18N
             }
 
             code.append(variables);
