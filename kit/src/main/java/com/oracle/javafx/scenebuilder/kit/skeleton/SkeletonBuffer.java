@@ -177,19 +177,21 @@ public class SkeletonBuffer {
             variables.append(INDENT).append("var "); //NOI18N
             final TypeVariable<? extends Class<?>>[] parameters = type.getTypeParameters();
 
-            if (parameters.length > 0) {
-                variables.append("<"); //NOI18N
-                String sep = ""; //NOI18N
-                for (TypeVariable<?> t : parameters) {
-                    variables.append(sep).append("?"); //NOI18N
-                    sep = ", "; //NOI18N
-                    t.getName(); // silly call to silence FindBugs
-                }
-                variables.append(">"); //NOI18N
-            }
+
 
             if (textType == TEXT_TYPE.WITH_COMMENTS) {
-                variables.append(key).append(":").append(type.getSimpleName()).append(" = _").append(" // Value injected by FXMLLoader\n\n"); //NOI18N
+                variables.append(key).append(":").append(type.getSimpleName());
+                if (parameters.length > 0) {
+                    variables.append("["); //NOI18N
+                    String sep = ""; //NOI18N
+                    for (TypeVariable<?> t : parameters) {
+                        variables.append(sep).append("_"); //NOI18N
+                        sep = ", "; //NOI18N
+                        t.getName(); // silly call to silence FindBugs
+                    }
+                    variables.append("]"); //NOI18N
+                }
+                variables.append(" = _").append(" // Value injected by FXMLLoader\n\n"); //NOI18N
             } else {
                 variables.append(key).append(":").append(type.getSimpleName()).append(" = _").append("\n\n"); //NOI18N
             }
