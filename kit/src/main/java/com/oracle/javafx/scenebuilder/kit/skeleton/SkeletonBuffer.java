@@ -99,39 +99,35 @@ public class SkeletonBuffer {
     }
 
     private void constructPackageLine() {
-            String controller = document.getFxomRoot().getFxController();
+        String controller = document.getFxomRoot().getFxController();
 
-            if (controller != null && !controller.isEmpty()
-                    && controller.contains(".") && !controller.contains("$")) { //NOI18N
-                packageLine.append("package "); //NOI18N
-                packageLine.append(controller.substring(0, controller.lastIndexOf('.'))); //NOI18N
-                packageLine.append(";\n\n"); //NOI18N
-            }
+        if (controller != null && !controller.isEmpty()
+                && controller.contains(".") && !controller.contains("$")) { //NOI18N
+            packageLine.append("package "); //NOI18N
+            packageLine.append(controller, 0, controller.lastIndexOf('.')); //NOI18N
+            packageLine.append(";\n\n"); //NOI18N
         }
+    }
 
     private void constructClassLine() {
-            String controller = document.getFxomRoot().getFxController();
-            classLine.append("\n"); //NOI18N
+        String controller = document.getFxomRoot().getFxController();
+        classLine.append("\n"); //NOI18N
 
-            if (controller != null && controller.contains("$")) { //NOI18N
+        classLine.append("class "); //NOI18N
 
+        if (controller != null && !controller.isEmpty()) {
+            String simpleName = controller.replace("$", "."); //NOI18N
+            int dot = simpleName.lastIndexOf('.');
+            if (dot > -1) {
+                simpleName = simpleName.substring(dot + 1);
             }
-
-            classLine.append("class "); //NOI18N
-
-            if (controller != null && !controller.isEmpty()) {
-                String simpleName = controller.replace("$", "."); //NOI18N
-                int dot = simpleName.lastIndexOf('.');
-                if (dot > -1) {
-                    simpleName = simpleName.substring(dot+1);
-                }
-                classLine.append(simpleName);
-            } else {
-                classLine.append("PleaseProvideControllerClassName"); //NOI18N
-            }
-
-            classLine.append(" {\n\n"); //NOI18N
+            classLine.append(simpleName);
+        } else {
+            classLine.append("PleaseProvideControllerClassName"); //NOI18N
         }
+
+        classLine.append(" {\n\n"); //NOI18N
+    }
 
     private void constructInitialize() {
         if (textFormat == FORMAT_TYPE.FULL) {
@@ -176,7 +172,6 @@ public class SkeletonBuffer {
             variables.append("\n"); //NOI18N
             variables.append(INDENT).append("var "); //NOI18N
             final TypeVariable<? extends Class<?>>[] parameters = type.getTypeParameters();
-
 
 
             if (textType == TEXT_TYPE.WITH_COMMENTS) {
@@ -225,7 +220,7 @@ public class SkeletonBuffer {
      * Generates the skeleton for the controller event handler methods.
      * For every eventTypeName, it searches for the appropriate event name.
      *
-     * @param methodName method name chosen by the user
+     * @param methodName    method name chosen by the user
      * @param eventTypeName eventTypeName, e.g. onMouseClicked
      */
     private void generateControllerSkeleton(String methodName, String eventTypeName) {
@@ -245,10 +240,9 @@ public class SkeletonBuffer {
      * @param eventName event name, for which a statement should be built.
      */
     private void addImportsForEvents(String eventName) {
-        if(EventNames.ACTION_EVENT.equals(eventName)) {
+        if (EventNames.ACTION_EVENT.equals(eventName)) {
             ImportBuilder.add(ImportBuilder.IMPORT_STATEMENT.concat(ImportBuilder.EVENT_PACKAGE), eventName);
-        }
-        else {
+        } else {
             ImportBuilder.add(ImportBuilder.IMPORT_STATEMENT.concat(ImportBuilder.INPUT_PACKAGE), eventName);
         }
         buildAndCollectImports();
@@ -264,7 +258,7 @@ public class SkeletonBuffer {
         for (Class<?> c : classes) {
             ImportBuilder.add(ImportBuilder.IMPORT_STATEMENT, c.getName().replace("$", "."));
             buildAndCollectImports();
-    }
+        }
         // need an import statement for @FXML, too
         ImportBuilder.add(ImportBuilder.IMPORT_STATEMENT, ImportBuilder.FXML_PACKAGE);
         buildAndCollectImports();
