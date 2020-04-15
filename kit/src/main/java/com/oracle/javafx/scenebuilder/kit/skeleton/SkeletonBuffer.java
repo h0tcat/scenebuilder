@@ -117,7 +117,7 @@ public class SkeletonBuffer {
 
             }
 
-            classLine.append("object "); //NOI18N
+            classLine.append("class "); //NOI18N
 
             if (controller != null && !controller.isEmpty()) {
                 String simpleName = controller.replace("$", "."); //NOI18N
