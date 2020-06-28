@@ -49,12 +49,12 @@ shadowJar {
 
 processResources {
     def buildDate = new Date().format(buildDateFormat)
-    from ('src/main/resources') {
+    from('src/main/resources') {
         include '**/*.properties'
         expand([
-                version: version,
+                version    : version,
                 javaVersion: System.getProperty('java.runtime.version') + ', ' + System.getProperty('java.vendor'),
-                buildDate: buildDate
+                buildDate  : buildDate
         ])
         filter(EscapeUnicode)
     }
