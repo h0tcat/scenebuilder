@@ -91,10 +91,6 @@ public class SkeletonBuffer {
     private void constructHeader() {
         if (textType == TEXT_TYPE.WITH_COMMENTS) {
             final String title = I18N.getString("skeleton.window.title", documentName);
-            header.append("/**\n"); //NOI18N
-            header.append(" * "); //NOI18N
-            header.append(title);
-            header.append("\n */\n\n"); //NOI18N
         }
     }
 
